@@ -1,0 +1,37 @@
+# topo-butterfly.txt
+
+* /---------\                                               /---------\
+* | Source1 |<--------------------------------------------->| Client1 |                         
+* \---------/<---+                                      +-->\---------/  
+* 				 \                                    /                            
+* 				  \                                  /     
+* 				   +-->/---------\     /---------\<-+     
+* 					   | Interm1 |<--->| Interm2 |                          
+* 				   +-->\---------/     \---------/<-+     
+* 				 /                                   \     
+* 				/                                     \    
+* /---------\<--+                                       +-->/---------\ 	                 
+* | Source2 |<--------------------------------------------->| Client2 | 	                     
+* \---------/                                               \---------/
+
+
+router
+
+# node  comment    yPos    xPos
+Source1   NA        3       1
+Source2   NA        1       1
+Interm1   NA        2       2
+Interm2   NA        2       3
+Client1   NA        3       4
+Client2   NA        1       4
+
+link
+
+# srcNode   dstNode     bandwidth   metric  delay   queue
+Source1     Interm1     5Mbps      1		0ms		20
+Source1		Client1		5Mbps		1		0ms		20
+Source2     Interm1     5Mbps      1		0ms		20
+Source2		Client2		5Mbps		1		0ms		20
+Interm1		Interm2		5Mbps      1		0ms		20
+Interm2		Client1		5Mbps      1		0ms		20
+Interm2		Client2		5Mbps      1		0ms		20

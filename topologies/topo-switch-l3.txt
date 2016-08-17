@@ -1,0 +1,107 @@
+router
+
+SwissIX
+TELIA
+Swisscom
+TIX
+GEANT
+CIXP
+GBLX
+AMS-IX
+BelWue
+Basel
+Neuchatel
+Zurich-University
+Delemont
+Kreuzlingen
+Grenchen
+Fribourg
+Geneva
+Birmensdorf
+Chur
+Brugg
+Lausanne-University
+Villigen-PSI
+Bern
+Winterthur
+Davos
+Martigny
+Zurich-ETH
+Lausanne-EPFL
+Rapperswil
+Liechtenstein
+IXEurope-Zurich
+Buchs-SG
+St-Gallen
+CERN
+Yverdon
+Manno
+Rueschlikon
+Horw
+Brig
+
+link
+# srcNode   		dstNode     			bandwidth   	metric  	delay 
+SwissIX				IXEurope-Zurich			10Mbps			1			0ms
+TELIA				IXEurope-Zurich			10Mbps			1			0ms
+Swisscom			IXEurope-Zurich			10Mbps			1			0ms
+TIX					IXEurope-Zurich			10Mbps			1			0ms
+SwissIX				Basel					1Mbps			1			0ms
+GEANT				CERN					20Mbps			1			0ms
+CIXP				CERN					1Mbps			1			0ms
+Swisscom			CERN					1Mbps			1			0ms
+GBLX				CERN					1Mbps			1			0ms
+AMS-IX				CERN					1Mbps			1			0ms
+BelWue				Kreuzlingen				10Mbps			1			0ms
+Neuchatel			Lausanne-EPFL			1Mbps			1			0ms
+Neuchatel			Grenchen				1Mbps			1			0ms
+Neuchatel			Yverdon					1Mbps			1			0ms
+Neuchatel			Delemont				1Mbps			1			0ms
+Neuchatel			Zurich-University		1Mbps			1			0ms
+Basel				Zurich-ETH				10Mbps			1			0ms
+Basel				Brugg					1Mbps			1			0ms
+Basel				Villigen-PSI			1Mbps			1			0ms
+Basel				Bern					10Mbps			1			0ms
+Basel				Delemont				1Mbps			1			0ms
+Zurich-University	Grenchen				1Mbps			1			0ms
+Zurich-University	CERN					10Mbps			1			0ms
+Zurich-University	Lausanne-EPFL			1Mbps			1			0ms
+Zurich-University	Brugg					1Mbps			1			0ms
+Zurich-University	Kreuzlingen				10Mbps			1			0ms
+Kreuzlingen			St-Gallen				1Mbps			1			0ms
+Fribourg			Bern					1Mbps			1			0ms
+Fribourg			Lausanne-University		1Mbps			1			0ms
+Geneva				CERN					10Mbps			1			0ms
+Geneva				Lausanne-EPFL			10Mbps			1			0ms
+Birmensdorf			Zurich-ETH				1Mbps			1			0ms
+Birmensdorf			Rueschlikon				1Mbps			1			0ms
+Chur				Davos					1Mbps			1			0ms
+Chur				Buchs-SG				1Mbps			1			0ms
+Chur				Rapperswil				1Mbps			1			0ms
+Lausanne-University	CERN					10Mbps			1			0ms
+Lausanne-University	Zurich-ETH				10Mbps			1			0ms
+Lausanne-University	Zurich-ETH				10Mbps			1			0ms
+Lausanne-University	Bern					10Mbps			1			0ms
+Lausanne-University	Lausanne-EPFL			10Mbps			1			0ms
+Villigen-PSI		Zurich-ETH				1Mbps			1			0ms
+Bern				Manno					10Mbps			1			0ms
+Winterthur			Zurich-ETH				1Mbps			1			0ms
+Winterthur			St-Gallen				1Mbps			1			0ms
+Davos				Buchs-SG				1Mbps			1			0ms
+Martigny			Brig					1Mbps			1			0ms
+Martigny			Lausanne-EPFL			1Mbps			1			0ms
+Zurich-ETH			Manno					10Mbps			1			0ms
+Zurich-ETH			Rapperswil				1Mbps			1			0ms
+Zurich-ETH			IXEurope-Zurich			10Mbps			1			0ms
+Zurich-ETH			Horw					1Mbps			1			0ms
+Lausanne-EPFL		Manno					10Mbps			1			0ms
+Lausanne-EPFL		CERN					10Mbps			1			0ms
+Lausanne-EPFL		Yverdon					1Mbps			1			0ms
+Rapperswil			Liechtenstein			1Mbps			1			0ms
+Rapperswil			Manno					1Mbps			1			0ms
+Liechtenstein		Buchs-SG				1Mbps			1			0ms
+Liechtenstein		St-Gallen				1Mbps			1			0ms
+IXEurope-Zurich		Rueschlikon				1Mbps			1			0ms
+Buchs-SG			St-Gallen				1Mbps			1			0ms
+Manno				Horw					1Mbps			1			0ms
+Manno				Brig					1Mbps			1			0ms

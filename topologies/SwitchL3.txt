@@ -1,0 +1,107 @@
+router
+
+SwissIX					NA
+TELIA
+Swisscom
+TIX
+GEANT
+CIXP
+GBLX
+AMS-IX
+BelWue
+Basel
+Neuchatel
+Zurich-University
+Delemont
+Kreuzlingen
+Grenchen
+Fribourg
+Geneva
+Birmensdorf
+Chur
+Brugg
+Lausanne-University
+Villigen-PSI
+Bern
+Winterthur
+Davos
+Martigny
+Zurich-ETH
+Lausanne-EPFL
+Rapperswil
+Liechtenstein
+IXEurope-Zurich
+Buchs-SG
+St-Gallen
+CERN
+Yverdon
+Manno
+Rueschlikon
+Horw
+Brig
+
+link
+
+SwissIX				IXEurope-Zurich			10Gbps
+TELIA				IXEurope-Zurich			10Gbps
+Swisscom			IXEurope-Zurich			10Gbps
+TIX					IXEurope-Zurich			10Gbps
+SwissIX				Basel					1Gbps
+GEANT				CERN					20Gbps
+CIXP				CERN					1Gbps
+Swisscom			CERN					1Gbps
+GBLX				CERN					1Gbps
+AMS-IX				CERN					1Gbps
+BelWue				Kreuzlingen				10Gbps
+Neuchatel			Lausanne-EPFL			1Gbps
+Neuchatel			Grenchen				1Gbps
+Neuchatel			Yverdon					1Gbps
+Neuchatel			Delemont				1Gbps
+Neuchatel			Zurich-University		1Gbps
+Basel				Zurich-ETH				10Gbps
+Basel				Brugg					1Gbps
+Basel				Villigen-PSI			1Gbps
+Basel				Bern					10Gbps
+Basel				Delemont				1Gbps
+Zurich-University	Grenchen				1Gbps
+Zurich-University	CERN					10Gbps
+Zurich-University	Lausanne-EPFL			1Gbps
+Zurich-University	Brugg					1Gbps
+Zurich-University	Kreuzlingen				10Gbps
+Kreuzlingen			St-Gallen				1Gbps
+Fribourg			Bern					1Gbps
+Fribourg			Lausanne-University		1Gbps
+Geneva				CERN					10Gbps
+Geneva				Lausanne-EPFL			10Gbps
+Birmensdorf			Zurich-ETH				1Gbps
+Birmensdorf			Rueschlikon				1Gbps
+Chur				Davos					1Gbps
+Chur				Buchs-SG				1Gbps
+Chur				Rapperswil				1Gbps
+Lausanne-University	CERN					10Gbps
+Lausanne-University	Zurich-ETH				10Gbps
+Lausanne-University	Zurich-ETH				10Gbps
+Lausanne-University	Bern					10Gbps
+Lausanne-University	Lausanne-EPFL			10Gbps
+Villigen-PSI		Zurich-ETH				1Gbps
+Bern				Manno					10Gbps
+Winterthur			Zurich-ETH				1Gbps
+Winterthur			St-Gallen				1Gbps
+Davos				Buchs-SG				1Gbps
+Martigny			Brig					1Gbps
+Martigny			Lausanne-EPFL			1Gbps
+Zurich-ETH			Manno					10Gbps
+Zurich-ETH			Rapperswil				1Gbps
+Zurich-ETH			IXEurope-Zurich			10Gbps
+Zurich-ETH			Horw					1Gbps
+Lausanne-EPFL		Manno					10Gbps
+Lausanne-EPFL		CERN					10Gbps
+Lausanne-EPFL		Yverdon					1Gbps
+Rapperswil			Liechtenstein			1Gbps
+Rapperswil			Manno					1Gbps
+Liechtenstein		Buchs-SG				1Gbps
+Liechtenstein		St-Gallen				1Gbps
+IXEurope-Zurich		Rueschlikon				1Gbps
+Buchs-SG			St-Gallen				1Gbps
+Manno				Horw					1Gbps
+Manno				Brig					1Gbps

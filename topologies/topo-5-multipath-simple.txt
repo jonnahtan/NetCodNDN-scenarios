@@ -1,0 +1,31 @@
+# topo-5-multipath-simple.txt
+
+*                                    /--------\
+*                                +-->| Inter2 |<--+
+*                               /    \--------/    \
+*                              /                    \
+*  /--------\     /--------\<-+                      +-->/--------\
+*  | Source |<--->| Inter1 |                             | Client |
+*  \--------/     \--------/<-+                      +-->\--------/
+*			                   \                    /
+*			                    \    /--------\    /
+*				                 +-->| Inter3 |<--+
+*				                     \--------/
+
+router
+
+# node  comment    yPos    xPos
+Source   NA        3       3
+Inter1   NA        3       5
+Inter2   NA        5       7
+Inter3   NA        1       7
+Client   NA        3       9
+
+link
+
+# srcNode   dstNode     bandwidth   metric  delay 
+Source      Inter1      30Mbps      1        0ms
+Inter1      Inter2      10Mbps      1        0ms
+Inter1      Inter3      10Mbps      1        0ms
+Inter2      Client      10Mbps      1        0ms
+Inter3      Client      10Mbps      1        0ms
