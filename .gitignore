@@ -4,3 +4,5 @@
 .lock*
 build/
 *.pyc
+results/*
+.vscode/
