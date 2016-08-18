@@ -1,0 +1,41 @@
+router
+
+#name   city    latitude  longitude
+l1-1    NA      50        50
+l2-1    NA    	25        25
+l2-2    NA    	25        75
+l2-3    NA    	75        75
+l2-4    NA    	75        25
+l3-1    NA    	00        00
+l3-2    NA    	00        50
+l3-3    NA    	00        100
+l3-4    NA    	50        50
+l3-5    NA    	100       100
+l3-6    NA    	100       50
+l3-7    NA    	100       00
+l3-8    NA    	50        00
+
+link
+
+#x      y       capacity(kbps)  OSPF    Delay   MaxPackets
+l1-1   l2-1      1Mbps          1       50ms    200
+l1-1   l2-2      1Mbps          1       50ms    200
+l1-1   l2-3      1Mbps          1       50ms    200
+l1-1   l2-3      1Mbps          1       50ms    200
+l2-1   l3-1      10Mbps         1       1ms     200 
+l2-1   l3-2      10Mbps         1       1ms     200
+l2-1   l3-7      10Mbps         1       1ms     200
+l2-1   l3-8      10Mbps         1       1ms     200
+l2-2   l3-2      10Mbps         1       1ms     200
+l2-2   l3-3      10Mbps         1       1ms     200
+l2-2   l3-4      10Mbps         1       1ms     200
+l2-2   l3-5      10Mbps         1       1ms     200
+l2-3   l3-3      10Mbps         1       1ms     200
+l2-3   l3-4      10Mbps         1       1ms     200
+l2-3   l3-5      10Mbps         1       1ms     200
+l2-3   l3-6      10Mbps         1       1ms     200
+l2-4   l3-1      10Mbps         1       1ms     200
+l2-4   l3-6      10Mbps         1       1ms     200
+l2-4   l3-7      10Mbps         1       1ms     200
+l2-4   l3-8      10Mbps         1       1ms     200
+
