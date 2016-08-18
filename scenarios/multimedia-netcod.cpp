@@ -70,7 +70,7 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("AllowDownscale", BooleanValue(false));
 	clientHelper.SetAttribute("ScreenWidth", UintegerValue(1920));
 	clientHelper.SetAttribute("ScreenHeight", UintegerValue(1080));
-	clientHelper.SetAttribute("StartRepresentationId", StringValue("11"));//auto
+	clientHelper.SetAttribute("StartRepresentationId", StringValue("auto"));//auto
 	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("0.1"));
 
@@ -115,7 +115,7 @@ main(int argc, char* argv[])
 	//L3RateTracer::InstallAll("results/l3-rate-trace.txt", Seconds(0.5));
 	FileConsumerLogTracer::InstallAll("results/file-consumer-log-trace.txt");
 		
-	Simulator::Stop(Seconds(5.0));
+	Simulator::Stop(Seconds(60.0));
 
 	Simulator::Run();
 	Simulator::Destroy();
