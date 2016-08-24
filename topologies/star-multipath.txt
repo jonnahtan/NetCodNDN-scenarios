@@ -18,10 +18,10 @@ l3-8    NA    	50        00
 link
 
 #x      y       capacity(kbps)  OSPF    Delay   MaxPackets
-l1-1   l2-1      1Mbps          1       50ms    200
-l1-1   l2-2      1Mbps          1       50ms    200
-l1-1   l2-3      1Mbps          1       50ms    200
-l1-1   l2-3      1Mbps          1       50ms    200
+l1-1   l2-1      2Mbps          1       1ms     200
+l1-1   l2-2      2Mbps          1       1ms     200
+l1-1   l2-3      2Mbps          1       1ms     200
+l1-1   l2-4      2Mbps          1       1ms     200
 l2-1   l3-1      10Mbps         1       1ms     200 
 l2-1   l3-2      10Mbps         1       1ms     200
 l2-1   l3-7      10Mbps         1       1ms     200
@@ -38,4 +38,3 @@ l2-4   l3-1      10Mbps         1       1ms     200
 l2-4   l3-6      10Mbps         1       1ms     200
 l2-4   l3-7      10Mbps         1       1ms     200
 l2-4   l3-8      10Mbps         1       1ms     200
-

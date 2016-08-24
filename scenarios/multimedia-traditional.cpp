@@ -63,7 +63,7 @@ main(int argc, char* argv[])
 	ndnGlobalRoutingHelper.InstallAll();
 
 	// Consumer(s)
-	ns3::ndn::AppHelper clientHelper("ns3::ndn::FileConsumerCbr::MultimediaConsumer");
+	ns3::ndn::AppHelper clientHelper("ns3::ndn::FileConsumerWindow::MultimediaConsumer");
 	clientHelper.SetAttribute("AllowUpscale", BooleanValue(true));
 	clientHelper.SetAttribute("AllowDownscale", BooleanValue(false));
 	clientHelper.SetAttribute("ScreenWidth", UintegerValue(1920));

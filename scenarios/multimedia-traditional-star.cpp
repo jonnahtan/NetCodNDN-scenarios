@@ -5,7 +5,7 @@
 #include "ns3/ndnSIM-module.h"
 
 // Custom Strategies
-//#include "random-load-balancer-strategy.hpp"
+#include "random-load-balancer-strategy.hpp"
 #include "weighted-load-balancer-strategy.hpp"
 #include "random-load-balancer-strategy_no-aggregation.hpp"
 
@@ -73,19 +73,19 @@ main(int argc, char* argv[])
 	ndnGlobalRoutingHelper.InstallAll();
 
 	// Consumer(s)
-	ns3::ndn::AppHelper clientHelper("ns3::ndn::FileConsumerNetworkCodingWindow::MultimediaConsumer");
+	ns3::ndn::AppHelper clientHelper("ns3::ndn::FileConsumerWindow::MultimediaConsumer");
 	clientHelper.SetAttribute("AllowUpscale", BooleanValue(true));
 	clientHelper.SetAttribute("AllowDownscale", BooleanValue(false));
 	clientHelper.SetAttribute("ScreenWidth", UintegerValue(1920));
 	clientHelper.SetAttribute("ScreenHeight", UintegerValue(1080));
-	clientHelper.SetAttribute("StartRepresentationId", StringValue("auto"));
+	clientHelper.SetAttribute("StartRepresentationId", StringValue("auto"));//auto
 	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("0.1"));
 
   	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
   	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/vid1.mpd" )));
 
-	clientHelper.SetAttribute("LifeTime", StringValue("400ms"));
+	clientHelper.SetAttribute("LifeTime", StringValue("500ms"));
 
   	//consumerHelper.SetPrefix (std::string("/Server_" + boost::lexical_cast<std::string>(i%server.size ()) + "/layer0"));
 
@@ -100,11 +100,11 @@ main(int argc, char* argv[])
 	}
 
 	// Producer(s)
- 	AppHelper producerHelper("ns3::ndn::FakeMultimediaServerNetworkCoding");
+ 	AppHelper producerHelper("ns3::ndn::FakeMultimediaServer");
  	producerHelper.SetPrefix("/unibe/videos");
 	producerHelper.SetAttribute("MetaDataFile", StringValue("data/csv/netflix_vid1.csv"));
 	producerHelper.SetAttribute("MPDFileName", StringValue("vid1.mpd"));
-  	producerHelper.Install(sources);
+  	producerHelper.Install(sources); // install to some node from nodelist
 	  
   	ndnGlobalRoutingHelper.AddOrigins("/unibe", sources);
 
@@ -138,7 +138,7 @@ main(int argc, char* argv[])
 	//AppDelayTracer::InstallAll("results/app-delays-trace.txt");
 	//L3RateTracer::InstallAll("results/l3-rate-trace.txt", Seconds(0.5));
 	//FileConsumerLogTracer::InstallAll("results/file-consumer-log-trace.txt");
-	DASHPlayerTracer::InstallAll("results/dash-tracer-netcod-star.txt");
+	DASHPlayerTracer::InstallAll("results/dash-tracer-traditional-star.txt");
 		
 	Simulator::Stop(Seconds(60.0));
 
