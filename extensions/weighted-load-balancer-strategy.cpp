@@ -462,7 +462,7 @@ WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& in
     uint32_t interetsPending_inFace = ncftEntry->getInterestsPending(inFace);
 
     // Check if this Interest should be aggregated (sigma^{p}_{fwd} > sigma^{p,f}_{pend})
-    if (interestsForwarded > interetsPending_inFace)
+    if (interestsForwarded >= interetsPending_inFace)
     {
     	// Interest will be aggregated
 		  return;

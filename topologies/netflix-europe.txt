@@ -1,19 +1,49 @@
 router
 
-#name   city    latitude  longitude
-l1-1    NA      50        50
-l2-1    NA    	25        25
-l2-2    NA    	25        75
-l2-3    NA    	75        75
-l2-4    NA    	75        25
-l3-1    NA    	00        00
-l3-2    NA    	00        50
-l3-3    NA    	00        100
-l3-4    NA    	50        50
-l3-5    NA    	100       100
-l3-6    NA    	100       50
-l3-7    NA    	100       00
-l3-8    NA    	50        00
+#name       location       
+SRC         Global     
+DUB-IX      Dublin 	   
+MAD-IX      Madrid 	   
+LHR-IX      London 	   
+CDG-IX      Paris      
+AMS-IX      Amsterdam  
+CGN-IX      Cologne    
+FRA-IX      Frankfurt  
+MXP-IX      Milan    
+ARN-IX      Stockholm  
+HEL-IX      Helsinki   
+AT-ISP2     AT    	   
+AT-ISP1     AT    	   
+BE-ISP2     AT    	   
+BE-ISP1     AT    	   
+CH-ISP1     CH    	   
+CH-ISP2     CH    	   
+DE-ISP1     DE    	   
+DE-ISP2     DE    	   
+DK-ISP1     DK    	   
+DK-ISP2     DK    	   
+ES-ISP1     ES    	   
+ES-ISP2     ES    	   
+FI-ISP1     FI    	   
+FI-ISP2     FI    	   
+FO-ISP1     FO    	   
+FO-ISP2     FO    	   
+FR-ISP1     FR    	   
+FR-ISP2     FR    	   
+GB-ISP1     GB    	   
+GB-ISP2     GB    	   
+IE-ISP1     IE    	   
+IE-ISP2     IE    	   
+IT-ISP1     IT    	   
+IT-ISP2     IT    	   
+NL-ISP1     NL    	   
+NL-ISP2     NL    	   
+NO-ISP1     NO    	   
+NO-ISP2     NO    	   
+PL-ISP1     PL    	   
+PL-ISP2     PL    	   
+SE-ISP1     SE    	   
+SE-ISP2     SE    	   
 
 link
 

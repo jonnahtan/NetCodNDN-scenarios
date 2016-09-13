@@ -120,6 +120,8 @@ RandomLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& inFa
 {
   NFD_LOG_TRACE("afterReceiveInterest");
 
+  std::cout << ">=" << std::endl;
+
   // Check if this Interest should be forwarded or aggregated
   if (ncftEntry->isAggregating(inFace))
 	{	
@@ -129,8 +131,10 @@ RandomLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& inFa
     // Get the number of pending interets for inFace (sigma^{p,f}_{pend}).
     uint32_t interetsPending_inFace = ncftEntry->getInterestsPending(inFace);
 
+    std::cout << interestsForwarded << ">=" << interetsPending_inFace << std::endl;
+
     // Check if this Interest should be aggregated (sigma^{p}_{fwd} > sigma^{p,f}_{pend})
-    if (interestsForwarded > interetsPending_inFace)
+    if (interestsForwarded >= interetsPending_inFace)
     {
     	// Interest will be aggregated
 		  return;

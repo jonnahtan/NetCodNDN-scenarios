@@ -20,7 +20,7 @@ using ns3::ndn::L3RateTracer;
 using ns3::ndn::FileConsumerLogTracer;
 using ns3::ndn::DASHPlayerTracer;
 
-NS_LOG_COMPONENT_DEFINE ("File_NetworkCoding");
+NS_LOG_COMPONENT_DEFINE ("File_Traditional");
 
 #define _LOG_INFO(x) NS_LOG_INFO(x)
 
@@ -60,7 +60,7 @@ main(int argc, char* argv[])
 
 	// Install NDN stack on all nodes
 	StackHelper ndnHelper;
-	ndnHelper.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "10000");
+	ndnHelper.setCsSize(1000000);
 	ndnHelper.InstallAll();
 
 	// Choosing forwarding strategy
@@ -78,8 +78,8 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("AllowDownscale", BooleanValue(false));
 	clientHelper.SetAttribute("ScreenWidth", UintegerValue(1920));
 	clientHelper.SetAttribute("ScreenHeight", UintegerValue(1080));
-	clientHelper.SetAttribute("StartRepresentationId", StringValue("auto"));//auto
-	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
+	clientHelper.SetAttribute("StartRepresentationId", StringValue("auto"));
+	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(60));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("0.1"));
 
   	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
@@ -94,7 +94,7 @@ main(int argc, char* argv[])
 	for (NodeContainer::Iterator it = clients.Begin (); it != clients.End (); ++it)
 	{
 		ApplicationContainer app = clientHelper.Install(*it);
-		uint64_t startTime = 100 + (rand() % 10);
+		uint64_t startTime = 100 + (rand() % 100);
 		NS_LOG_UNCOND("Delay time for client " << (*it)->GetId() << " is " << startTime);
 		app.Start(MilliSeconds(startTime));
 	}
@@ -135,12 +135,12 @@ main(int argc, char* argv[])
 	FibHelper::AddRoute("l3-8", "/unibe", "l2-4", 1);
 
 	// Intalling Tracers
-	//AppDelayTracer::InstallAll("results/app-delays-trace.txt");
-	//L3RateTracer::InstallAll("results/l3-rate-trace.txt", Seconds(0.5));
-	//FileConsumerLogTracer::InstallAll("results/file-consumer-log-trace.txt");
-	DASHPlayerTracer::InstallAll("results/dash-tracer-traditional-star.txt");
+	//L3RateTracer::Install(sources, "results/star/traditional/l3-rate-trace.txt", Seconds(1.0));
+	L3RateTracer::InstallAll("results/star/traditional/l3-rate-trace.txt", Seconds(0.25));
+	FileConsumerLogTracer::InstallAll("results/star/traditional/file-consumer-log-trace.txt");
+	DASHPlayerTracer::InstallAll("results/star/traditional/dash-trace.txt");
 		
-	Simulator::Stop(Seconds(60.0));
+	Simulator::Stop(Seconds(200.0));
 
 	Simulator::Run();
 	Simulator::Destroy();
