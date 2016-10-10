@@ -4,6 +4,6 @@
 .lock*
 build/
 *.pyc
-results/*
+results/data
 .vscode/
 *.db
