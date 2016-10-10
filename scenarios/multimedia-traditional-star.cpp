@@ -33,6 +33,11 @@ main(int argc, char* argv[])
 	AnnotatedTopologyReader topologyReader("", 25);
 	topologyReader.SetFileName("topologies/star-multipath.txt");
 	topologyReader.Read();
+
+	// Install NDN stack on all nodes
+	StackHelper ndnHelper;
+	ndnHelper.setCsSize(1000000);
+	ndnHelper.InstallAll();
 	
 	// Getting containers for the consumer/producer
 	NodeContainer sources;
@@ -58,13 +63,34 @@ main(int argc, char* argv[])
 	clients.Add("l3-7");
 	clients.Add("l3-8");
 
-	// Install NDN stack on all nodes
-	StackHelper ndnHelper;
-	ndnHelper.setCsSize(1000000);
-	ndnHelper.InstallAll();
+	// Calculate and install FIBs
+	
+	// L2 to L1
+	FibHelper::AddRoute("l2-1", "/unibe", "l1-1", 1);
+	FibHelper::AddRoute("l2-2", "/unibe", "l1-1", 1);
+	FibHelper::AddRoute("l2-3", "/unibe", "l1-1", 1);
+	FibHelper::AddRoute("l2-4", "/unibe", "l1-1", 1);
+
+	// L3 to L2
+	FibHelper::AddRoute("l3-1", "/unibe", "l2-1", 1);
+	FibHelper::AddRoute("l3-2", "/unibe", "l2-1", 1);
+	FibHelper::AddRoute("l3-7", "/unibe", "l2-1", 1);
+	FibHelper::AddRoute("l3-8", "/unibe", "l2-1", 1);
+	FibHelper::AddRoute("l3-2", "/unibe", "l2-2", 1);
+	FibHelper::AddRoute("l3-3", "/unibe", "l2-2", 1);
+	FibHelper::AddRoute("l3-4", "/unibe", "l2-2", 1);
+	FibHelper::AddRoute("l3-5", "/unibe", "l2-2", 1);
+	FibHelper::AddRoute("l3-3", "/unibe", "l2-3", 1);
+	FibHelper::AddRoute("l3-4", "/unibe", "l2-3", 1);
+	FibHelper::AddRoute("l3-5", "/unibe", "l2-3", 1);
+	FibHelper::AddRoute("l3-6", "/unibe", "l2-3", 1);
+	FibHelper::AddRoute("l3-1", "/unibe", "l2-4", 1);
+	FibHelper::AddRoute("l3-6", "/unibe", "l2-4", 1);
+	FibHelper::AddRoute("l3-7", "/unibe", "l2-4", 1);
+	FibHelper::AddRoute("l3-8", "/unibe", "l2-4", 1);
 
 	// Choosing forwarding strategy
-	StrategyChoiceHelper::Install<nfd::fw::RandomLoadBalancerStrategy_NA>(sources, "/unibe");
+	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(sources, "/unibe");
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(routers, "/unibe");
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(clients, "/unibe");
 	
@@ -107,32 +133,6 @@ main(int argc, char* argv[])
   	producerHelper.Install(sources); // install to some node from nodelist
 	  
   	ndnGlobalRoutingHelper.AddOrigins("/unibe", sources);
-
-	// Calculate and install FIBs
-	
-	// L2 to L1
-	FibHelper::AddRoute("l2-1", "/unibe", "l1-1", 1);
-	FibHelper::AddRoute("l2-2", "/unibe", "l1-1", 1);
-	FibHelper::AddRoute("l2-3", "/unibe", "l1-1", 1);
-	FibHelper::AddRoute("l2-4", "/unibe", "l1-1", 1);
-
-	// L3 to L2
-	FibHelper::AddRoute("l3-1", "/unibe", "l2-1", 1);
-	FibHelper::AddRoute("l3-2", "/unibe", "l2-1", 1);
-	FibHelper::AddRoute("l3-7", "/unibe", "l2-1", 1);
-	FibHelper::AddRoute("l3-8", "/unibe", "l2-1", 1);
-	FibHelper::AddRoute("l3-2", "/unibe", "l2-2", 1);
-	FibHelper::AddRoute("l3-3", "/unibe", "l2-2", 1);
-	FibHelper::AddRoute("l3-4", "/unibe", "l2-2", 1);
-	FibHelper::AddRoute("l3-5", "/unibe", "l2-2", 1);
-	FibHelper::AddRoute("l3-3", "/unibe", "l2-3", 1);
-	FibHelper::AddRoute("l3-4", "/unibe", "l2-3", 1);
-	FibHelper::AddRoute("l3-5", "/unibe", "l2-3", 1);
-	FibHelper::AddRoute("l3-6", "/unibe", "l2-3", 1);
-	FibHelper::AddRoute("l3-1", "/unibe", "l2-4", 1);
-	FibHelper::AddRoute("l3-6", "/unibe", "l2-4", 1);
-	FibHelper::AddRoute("l3-7", "/unibe", "l2-4", 1);
-	FibHelper::AddRoute("l3-8", "/unibe", "l2-4", 1);
 
 	// Intalling Tracers
 	//L3RateTracer::Install(sources, "results/star/traditional/l3-rate-trace.txt", Seconds(1.0));
