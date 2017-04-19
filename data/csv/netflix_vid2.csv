@@ -1,8 +1,0 @@
-segmentDuration=2
-numberOfSegments=30
-reprId,screenWidth,screenHeight,bitrate
-1,320,240,235
-2,512,384,750
-3,640,480,1050
-4,1280,720,3000
-5,1920,1080,4300

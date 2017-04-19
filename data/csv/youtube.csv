@@ -1,0 +1,8 @@
+segmentDuration=4
+numberOfSegments=20
+reprId,screenWidth,screenHeight,bitrate
+480,854,480,2500
+720,1280,720,5000
+1080,1920,1080,8000
+4K,3840,2160,40000
+4K,3840,2160,15600

@@ -8,6 +8,7 @@
 //#include "random-load-balancer-strategy.hpp"
 #include "weighted-load-balancer-strategy.hpp"
 #include "random-load-balancer-strategy_no-aggregation.hpp"
+#include <boost/filesystem.hpp>
 
 using namespace ns3;
 using ns3::ndn::StackHelper;
@@ -26,17 +27,15 @@ NS_LOG_COMPONENT_DEFINE ("File_NetworkCoding_L");
 int
 main(int argc, char* argv[])
 {
+	int runId = 1;
 	CommandLine cmd;
+	cmd.AddValue ("runid", "ID for this run", runId);
 	cmd.Parse(argc, argv);
+
 
 	AnnotatedTopologyReader topologyReader("", 25);
 	topologyReader.SetFileName("topologies/layer-generated.txt");
 	topologyReader.Read();
-	
-	// Install NDN stack on all nodes
-	StackHelper ndnHelper;
-	ndnHelper.setCsSize(1000000);
-	ndnHelper.InstallAll();
 	
 	// Getting containers for the consumer/producer
 	NodeContainer sources;
@@ -45,6 +44,23 @@ main(int argc, char* argv[])
 
     // Fill the containers and set the routing (FIB)
     #include "../topologies/layer-generated-cpp.txt"
+
+	/*
+
+	// Install NDN stack
+	StackHelper ndnSources;
+	ndnSources.setCsSize(100);
+	ndnSources.Install(sources);
+
+	StackHelper ndnRouters;
+	ndnRouters.setCsSize(100);
+	ndnRouters.Install(routers);
+
+	StackHelper ndnClients;
+	ndnClients.setCsSize(1);
+	ndnClients.Install(clients);
+
+	*/
 	
 	// Choosing forwarding strategy
 	StrategyChoiceHelper::Install<nfd::fw::RandomLoadBalancerStrategy_NA>(sources, "/unibe");
@@ -57,14 +73,14 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("AllowDownscale", BooleanValue(false));
 	clientHelper.SetAttribute("ScreenWidth", UintegerValue(1920));
 	clientHelper.SetAttribute("ScreenHeight", UintegerValue(1080));
-	clientHelper.SetAttribute("StartRepresentationId", StringValue("auto"));
+	clientHelper.SetAttribute("StartRepresentationId", StringValue("lowest"));
 	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(60));
-	clientHelper.SetAttribute("StartUpDelay", StringValue("0.5"));
+	clientHelper.SetAttribute("StartUpDelay", StringValue("2.0"));
 
   	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
   	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
-	clientHelper.SetAttribute("LifeTime", StringValue("500ms"));
+	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
   	//consumerHelper.SetPrefix (std::string("/Server_" + boost::lexical_cast<std::string>(i%server.size ()) + "/layer0"));
 
@@ -73,7 +89,7 @@ main(int argc, char* argv[])
 	for (NodeContainer::Iterator it = clients.Begin (); it != clients.End (); ++it)
 	{
 		ApplicationContainer app = clientHelper.Install(*it);
-		uint64_t startTime = 100 + (rand() % 100);
+		uint64_t startTime = 500 + (rand() % 100);
 		NS_LOG_UNCOND("Delay time for client " << (*it)->GetId() << " is " << startTime);
 		app.Start(MilliSeconds(startTime));
 	}
@@ -81,7 +97,7 @@ main(int argc, char* argv[])
 	// Producer(s)
  	AppHelper producerHelper("ns3::ndn::FakeMultimediaServerNetworkCoding");
  	producerHelper.SetPrefix("/unibe/videos");
-	producerHelper.SetAttribute("MetaDataFile", StringValue("data/csv/netflix_vid2.csv"));
+	producerHelper.SetAttribute("MetaDataFile", StringValue("data/csv/netflix.csv"));
 	producerHelper.SetAttribute("MPDFileName", StringValue("video1.mpd"));
   	producerHelper.Install(sources);
 	  
@@ -91,10 +107,17 @@ main(int argc, char* argv[])
   	ndnGlobalRoutingHelper.AddOrigins("/unibe", sources);
 
 	// Intalling Tracers
+	std::string tracer_path = std::string("results/generated/" + std::to_string(runId) + "/netcodndn/");
+
+    boost::filesystem::path dir(tracer_path.c_str());
+    if(boost::filesystem::create_directories(dir))
+    {
+		NS_LOG_UNCOND("Directory Created: " + tracer_path);
+    }
 	//L3RateTracer::Install(sources, "results/star/netcod/l3-rate-trace.txt", Seconds(1.0));
-	L3RateTracer::InstallAll("results/star/netcod/l3-rate-trace.txt", Seconds(0.5));
+	L3RateTracer::InstallAll(tracer_path + "l3-rate-trace.txt", Seconds(0.5));
 	//FileConsumerLogTracer::Install(Names::Find<Node>("SE-C002"), "results/star/netcod/file-consumer-log-trace.txt");
-	DASHPlayerTracer::InstallAll("results/star/netcod/dash-trace.txt");
+	DASHPlayerTracer::InstallAll(tracer_path + "dash-trace.txt");
 		
 	Simulator::Stop(Seconds(200.0));
 
