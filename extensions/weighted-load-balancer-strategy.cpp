@@ -299,7 +299,7 @@ WeightedLoadBalancerStrategy::mySendInterest(const Interest& interest,
   const milliseconds totalDelay = measurementsEntryInfo->totalDelay;
   const milliseconds inverseTotalDelay =
     MyMeasurementInfo::calculateInverseDelaySum(measurementsEntryInfo);
-    
+
   std::uniform_int_distribution<uint64_t> dist(0, inverseTotalDelay.count());
   const uint64_t selection = dist(m_randomGenerator);
 
@@ -445,7 +445,7 @@ hasFaceForForwarding_NetworkCoding(const fib::NextHopList& nexthops, shared_ptr<
 }
 
 void
-WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& inFace, 
+WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& inFace,
                                                                 const Interest& interest,
                                                                 shared_ptr<fib::Entry> fibEntry,
                                                                 shared_ptr<ncft::Entry> ncftEntry)
@@ -453,13 +453,13 @@ WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& in
   NFD_LOG_TRACE("afterReceiveInterest");
 
   // Check if this Interest should be forwarded or aggregated
-  if (ncftEntry->isAggregating(inFace))
-	{	
+  if (inFace.isAggregating())
+	{
     // Get the total number of interets forwarded and pending for this node (sigma^{p}_{fwd}).
     uint32_t interestsForwarded = ncftEntry->getInterestsForwarded();
 
     // Get the number of pending interets for inFace (sigma^{p,f}_{pend}).
-    uint32_t interetsPending_inFace = ncftEntry->getInterestsPending(inFace);
+    uint32_t interetsPending_inFace = ncftEntry->getTotalPending(inFace);
 
     // Check if this Interest should be aggregated (sigma^{p}_{fwd} > sigma^{p,f}_{pend})
     if (interestsForwarded >= interetsPending_inFace)
@@ -487,14 +487,14 @@ WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& in
 
   // Check the congestion in each Out Record
   for (ncft::OutRecordCollection::const_iterator outRecord = outRecords.begin();
-    outRecord != outRecords.end(); ++outRecord) 
+    outRecord != outRecords.end(); ++outRecord)
   {
     congestionMap.emplace(outRecord->getFace()->getId(), outRecord->getInterestsForwarded());
   }
 
   // If a face available for forwarding at FIB had no Out Record, add congestion 0
-  for (fib::NextHopList::iterator nextHop = nextHops.begin(); 
-    nextHop != nextHops.end(); ++nextHop) 
+  for (fib::NextHopList::iterator nextHop = nextHops.begin();
+    nextHop != nextHops.end(); ++nextHop)
   {
     if (congestionMap.count(nextHop->getFace()->getId()) == 0)
     {
@@ -504,24 +504,24 @@ WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& in
 
   // Find the lowest value of pending interests
   auto l = std::min_element(congestionMap.begin(), congestionMap.end(),
-    [] (std::pair<uint32_t,uint32_t> i, std::pair<uint32_t,uint32_t> j) 
+    [] (std::pair<uint32_t,uint32_t> i, std::pair<uint32_t,uint32_t> j)
     { return i.second < j.second; });
 
   uint32_t lowest = l->second;
 
   // Remove all next hops that have more than 'lowest' pending interests
-  for (fib::NextHopList::iterator nextHop = nextHops.begin(); 
-    nextHop != nextHops.end(); ) 
+  for (fib::NextHopList::iterator nextHop = nextHops.begin();
+    nextHop != nextHops.end(); )
   {
     if (congestionMap.at(nextHop->getFace()->getId()) != lowest)
     {
       nextHop = nextHops.erase(nextHop);
-    } 
+    }
     else
     {
       ++nextHop;
     }
-  }  
+  }
 
   fib::NextHopList::iterator selected;
   do {

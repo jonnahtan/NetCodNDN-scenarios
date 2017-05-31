@@ -36,7 +36,7 @@ main(int argc, char* argv[])
 	AnnotatedTopologyReader topologyReader("", 25);
 	topologyReader.SetFileName("topologies/layer-generated.txt");
 	topologyReader.Read();
-	
+
 	// Getting containers for the consumer/producer
 	NodeContainer sources;
 	NodeContainer routers;
@@ -61,7 +61,7 @@ main(int argc, char* argv[])
 	ndnClients.Install(clients);
 
 	*/
-	
+
 	// Choosing forwarding strategy
 	StrategyChoiceHelper::Install<nfd::fw::RandomLoadBalancerStrategy_NA>(sources, "/unibe");
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(routers, "/unibe");
@@ -74,11 +74,11 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("ScreenWidth", UintegerValue(1920));
 	clientHelper.SetAttribute("ScreenHeight", UintegerValue(1080));
 	clientHelper.SetAttribute("StartRepresentationId", StringValue("lowest"));
-	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(60));
+	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("2.0"));
 
-  	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
-  	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
+  clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
+  clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
 	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
@@ -100,7 +100,7 @@ main(int argc, char* argv[])
 	producerHelper.SetAttribute("MetaDataFile", StringValue("data/csv/netflix.csv"));
 	producerHelper.SetAttribute("MPDFileName", StringValue("video1.mpd"));
   	producerHelper.Install(sources);
-	  
+
     // Installing global routing interface on all nodes
 	GlobalRoutingHelper ndnGlobalRoutingHelper;
 	ndnGlobalRoutingHelper.InstallAll();
@@ -114,11 +114,10 @@ main(int argc, char* argv[])
     {
 		NS_LOG_UNCOND("Directory Created: " + tracer_path);
     }
-	//L3RateTracer::Install(sources, "results/star/netcod/l3-rate-trace.txt", Seconds(1.0));
-	L3RateTracer::InstallAll(tracer_path + "l3-rate-trace.txt", Seconds(0.5));
+	//L3RateTracer::InstallAll(tracer_path + "l3-rate-trace.txt", Seconds(1.0));
 	//FileConsumerLogTracer::Install(Names::Find<Node>("SE-C002"), "results/star/netcod/file-consumer-log-trace.txt");
 	DASHPlayerTracer::InstallAll(tracer_path + "dash-trace.txt");
-		
+
 	Simulator::Stop(Seconds(200.0));
 
 	Simulator::Run();
