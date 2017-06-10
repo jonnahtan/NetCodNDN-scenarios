@@ -38,7 +38,7 @@ const Name RandomLoadBalancerStrategy_NA::STRATEGY_NAME("ndn:/localhost/nfd/stra
 RandomLoadBalancerStrategy_NA::RandomLoadBalancerStrategy_NA(Forwarder& forwarder, const Name& name)
   : Strategy(forwarder, name)
 {
-  forwarder.forbidReplyFromNcmt_NetworkCoding();
+  //forwarder.forbidReplyFromNcmt_NetworkCoding();
 }
 
 RandomLoadBalancerStrategy_NA::~RandomLoadBalancerStrategy_NA()
@@ -110,7 +110,7 @@ hasFaceForForwarding_NetworkCoding(const fib::NextHopList& nexthops, shared_ptr<
 }
 
 void
-RandomLoadBalancerStrategy_NA::afterReceiveInterest_NetworkCoding( const Face& inFace, 
+RandomLoadBalancerStrategy_NA::afterReceiveInterest_NetworkCoding( const Face& inFace,
                                                                 const Interest& interest,
                                                                 shared_ptr<fib::Entry> fibEntry,
                                                                 shared_ptr<ncft::Entry> ncftEntry)

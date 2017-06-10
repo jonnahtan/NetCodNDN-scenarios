@@ -29,7 +29,7 @@ ndnSources.setCsSize(1);
 ndnSources.Install(sources);
 
 StackHelper ndnRouters;
-ndnRouters.setCsSize(100);
+ndnRouters.setCsSize(50);
 ndnRouters.Install(routers);
 
 StackHelper ndnClients;
