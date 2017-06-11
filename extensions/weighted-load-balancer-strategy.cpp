@@ -535,7 +535,9 @@ WeightedLoadBalancerStrategy::afterReceiveInterest_NetworkCoding( const Face& in
     }
   } while (!canForwardToNextHop_NetworkCoding(ncftEntry, *selected));
 
-  this->sendInterest_NetworkCoding(ncftEntry, selected->getFace());
+  bool isCachingDown = interest.isCachingDown();
+
+  this->sendInterest_NetworkCoding(ncftEntry, selected->getFace(), isCachingDown);
 }
 
 } // namespace fw
