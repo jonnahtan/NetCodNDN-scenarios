@@ -85,7 +85,7 @@ def get_links ( l0_nodes , l1_nodes , l2_nodes , l3_nodes , l3_location ):
             ls.append(l)
 
     # L2 -> L1 links
-    max_parents_l2 = min(2, len(l1_nodes))
+    max_parents_l2 = min(3, len(l1_nodes))
     for x in l2_nodes:
         for y in random.sample(l1_nodes, max_parents_l2):
             l = Link()

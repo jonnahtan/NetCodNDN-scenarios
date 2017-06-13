@@ -77,8 +77,9 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("2.0"));
 
-  clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
-  clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
+  //clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
+	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
+  	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
 	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
@@ -114,7 +115,7 @@ main(int argc, char* argv[])
     {
 		NS_LOG_UNCOND("Directory Created: " + tracer_path);
     }
-	//L3RateTracer::InstallAll(tracer_path + "l3-rate-trace.txt", Seconds(1.0));
+	L3RateTracer::InstallAll(tracer_path + "l3-rate-trace.txt", Seconds(1.0));
 	//FileConsumerLogTracer::Install(Names::Find<Node>("SE-C002"), "results/star/netcod/file-consumer-log-trace.txt");
 	DASHPlayerTracer::InstallAll(tracer_path + "dash-trace.txt");
 

@@ -1,0 +1,69 @@
+// Adding sources
+sources.Add("SRC");
+
+// Adding routers
+routers.Add("ES-ISP1");
+routers.Add("ES-ISP2");
+routers.Add("ES-ISP3");
+routers.Add("IE-ISP1");
+routers.Add("IE-ISP2");
+routers.Add("IE-ISP3");
+
+// Adding clients
+clients.Add("ES-C001");
+clients.Add("ES-C002");
+clients.Add("ES-C003");
+clients.Add("ES-C004");
+clients.Add("ES-C005");
+clients.Add("ES-C006");
+clients.Add("IE-C001");
+clients.Add("IE-C002");
+clients.Add("IE-C003");
+clients.Add("IE-C004");
+clients.Add("IE-C005");
+clients.Add("IE-C006");
+
+// Install NDN stack
+StackHelper ndnSources;
+ndnSources.setCsSize(1);
+ndnSources.Install(sources);
+
+StackHelper ndnRouters;
+ndnRouters.setCsSize(100);
+ndnRouters.Install(routers);
+
+StackHelper ndnClients;
+ndnClients.setCsSize(1);
+ndnClients.Install(clients);
+
+// Calculate and install FIBs
+FibHelper::AddRoute("ES-ISP1", "/unibe", "SRC", 1);
+FibHelper::AddRoute("ES-ISP2", "/unibe", "SRC", 1);
+FibHelper::AddRoute("ES-ISP3", "/unibe", "SRC", 1);
+FibHelper::AddRoute("IE-ISP1", "/unibe", "SRC", 1);
+FibHelper::AddRoute("IE-ISP2", "/unibe", "SRC", 1);
+FibHelper::AddRoute("IE-ISP3", "/unibe", "SRC", 1);
+FibHelper::AddRoute("ES-C001", "/unibe", "ES-ISP1", 1);
+FibHelper::AddRoute("ES-C001", "/unibe", "ES-ISP2", 1);
+FibHelper::AddRoute("ES-C002", "/unibe", "ES-ISP3", 1);
+FibHelper::AddRoute("ES-C002", "/unibe", "ES-ISP2", 1);
+FibHelper::AddRoute("ES-C003", "/unibe", "ES-ISP1", 1);
+FibHelper::AddRoute("ES-C003", "/unibe", "ES-ISP3", 1);
+FibHelper::AddRoute("ES-C004", "/unibe", "ES-ISP1", 1);
+FibHelper::AddRoute("ES-C004", "/unibe", "ES-ISP2", 1);
+FibHelper::AddRoute("ES-C005", "/unibe", "ES-ISP3", 1);
+FibHelper::AddRoute("ES-C005", "/unibe", "ES-ISP2", 1);
+FibHelper::AddRoute("ES-C006", "/unibe", "ES-ISP1", 1);
+FibHelper::AddRoute("ES-C006", "/unibe", "ES-ISP3", 1);
+FibHelper::AddRoute("IE-C001", "/unibe", "IE-ISP1", 1);
+FibHelper::AddRoute("IE-C001", "/unibe", "IE-ISP2", 1);
+FibHelper::AddRoute("IE-C002", "/unibe", "IE-ISP3", 1);
+FibHelper::AddRoute("IE-C002", "/unibe", "IE-ISP2", 1);
+FibHelper::AddRoute("IE-C003", "/unibe", "IE-ISP1", 1);
+FibHelper::AddRoute("IE-C003", "/unibe", "IE-ISP3", 1);
+FibHelper::AddRoute("IE-C004", "/unibe", "IE-ISP1", 1);
+FibHelper::AddRoute("IE-C004", "/unibe", "IE-ISP2", 1);
+FibHelper::AddRoute("IE-C005", "/unibe", "IE-ISP3", 1);
+FibHelper::AddRoute("IE-C005", "/unibe", "IE-ISP2", 1);
+FibHelper::AddRoute("IE-C006", "/unibe", "IE-ISP1", 1);
+FibHelper::AddRoute("IE-C006", "/unibe", "IE-ISP3", 1);

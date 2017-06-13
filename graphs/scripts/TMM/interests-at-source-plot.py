@@ -48,8 +48,8 @@ data_packets_ncn = pd.DataFrame()
 data_packets_ndn = pd.DataFrame()
 
 for i in range(N_RUN):
-    data_packets_ncn = pd.concat([data_packets_ncn, read_data_packets_at_source ( '../../results/results_4/' + str(i) + '/netcodndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
-    data_packets_ndn = pd.concat([data_packets_ndn, read_data_packets_at_source ( '../../results/results_4/' + str(i) + '/ndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
+    data_packets_ncn = pd.concat([data_packets_ncn, read_data_packets_at_source ( '../../../results/generated/' + str(i+1) + '/netcodndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
+    data_packets_ndn = pd.concat([data_packets_ndn, read_data_packets_at_source ( '../../../results/generated/' + str(i+1) + '/ndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
 
 # multiply packets to KB
 data_packets_ncn[0] = data_packets_ncn[0] * 1.455
