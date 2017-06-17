@@ -9,9 +9,9 @@ def read_quality ( path ):
     f = pd.read_csv(path, sep='\t')
     fx = pd.DataFrame(f,columns=['SegmentNumber','SegmentRepID'])
     a =  fx.groupby(['SegmentNumber','SegmentRepID']).size()
-    t480 = a.xs(480, level='SegmentRepID').sum()
-    t720 = a.xs(720, level='SegmentRepID').sum()
-    t1080 = a.xs(1080, level='SegmentRepID').sum()
+    t480 = a.xs('1_480', level='SegmentRepID').sum()
+    t720 = a.xs('2_720', level='SegmentRepID').sum()
+    t1080 = a.xs('3_1080', level='SegmentRepID').sum()
     t = t480 + t720 + t1080
     return np.array([(100.0*t480/t), (100.0*t720/t), (100.0*t1080/t)])
 
@@ -19,8 +19,8 @@ quality_ncn = np.zeros(3)
 quality_ndn = np.zeros(3)
 
 for i in range(N_RUN):
-    quality_ncn = quality_ncn + read_quality ( '../../results/generated/' + str(i) + '/netcodndn/dash-trace.txt' )
-    quality_ndn = quality_ndn + read_quality ( '../../results/generated/' + str(i) + '/ndn/dash-trace.txt' )
+    quality_ncn = quality_ncn + read_quality ( '../../../results/generated/' + str(i+1) + '/netcodndn/dash-trace.txt' )
+    quality_ndn = quality_ndn + read_quality ( '../../../results/generated/' + str(i+1 ) + '/ndn/dash-trace.txt' )
 
 #upper_limit_ncn = quality_ncn.max(axis=1)
 #lower_limit_ncn = quality_ncn.min(axis=1)

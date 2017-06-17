@@ -1,9 +1,10 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.interpolate import interp1d
+from common import *
 
+N_SEGMENTS = 60
 N_RUN = 1
+RESULT_PREFIX = '../../../results/generated/'
+RESULT_NAME = 'l3-rate-trace_10Mbps.txt'
 
 def read_data_packets_at_source ( path ):
     f = pd.read_csv(path,
@@ -39,8 +40,7 @@ def read_data_packets_at_source ( path ):
     #p = f1.Kilobytes + f2.Kilobytes + f3.Kilobytes + f4.Kilobytes + f5.Kilobytes + f6.Kilobytes + f7.Kilobytes + f8.Kilobytes + f9.Kilobytes + f10.Kilobytes
 
     r = pd.DataFrame(p.as_matrix(), index=t).cumsum()
-    r = r.loc[0:60]
-    print r
+    r = r.loc[1:2*N_SEGMENTS]
 
     return r
 
@@ -48,8 +48,8 @@ data_packets_ncn = pd.DataFrame()
 data_packets_ndn = pd.DataFrame()
 
 for i in range(N_RUN):
-    data_packets_ncn = pd.concat([data_packets_ncn, read_data_packets_at_source ( '../../../results/generated/' + str(i+1) + '/netcodndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
-    data_packets_ndn = pd.concat([data_packets_ndn, read_data_packets_at_source ( '../../../results/generated/' + str(i+1) + '/ndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
+    data_packets_ncn = pd.concat([data_packets_ncn, read_data_packets_at_source ( RESULT_PREFIX + str(i+1) + '/netcodndn/' + RESULT_NAME )], axis=1, ignore_index=True)
+    data_packets_ndn = pd.concat([data_packets_ndn, read_data_packets_at_source ( RESULT_PREFIX + str(i+1) + '/ndn/' + RESULT_NAME )], axis=1, ignore_index=True)
 
 # multiply packets to KB
 data_packets_ncn[0] = data_packets_ncn[0] * 1.455
@@ -67,16 +67,18 @@ upper_limit_ndn = data_packets_ndn.max(axis=1)
 lower_limit_ndn = data_packets_ndn.min(axis=1)
 mean_ndn = data_packets_ndn.mean(axis=1)
 
-fig,ax = plt.subplots()
+fig,ax = newfig(0.32)
 
 ax.fill_between(upper_limit_ncn.index.values, upper_limit_ncn, lower_limit_ncn, color='blue', alpha=0.5)
-ax.plot(mean_ncn, label='NetCodNDN-DASH', color='blue', marker=">")
+ax.plot(mean_ncn, label='NetCodNDN-DASH', color='blue')
 
 ax.fill_between(upper_limit_ndn.index.values, upper_limit_ndn, lower_limit_ndn, color='red', alpha=0.5)
-ax.plot(mean_ndn, label='NDN-DASH', color='red', marker="*")
+ax.plot(mean_ndn, label='NDN-DASH', color='red')
 
-ax.legend(loc='lower right')
-ax.set_ylabel("Data provided by the source [MB]")
+ax.legend(loc='best')
+ax.set_ylabel("Data delivered by the source [MB]")
 ax.set_xlabel("Time [s]")
 
-plt.show()
+
+# Save the figure
+savefig('data-from-source')

@@ -1,10 +1,11 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.stats as st
-from scipy.interpolate import interp1d
+from common import *
 
+N_SEGMENTS = 50
 N_RUN = 1
+RESULT_PREFIX = '../../../results/generated/'
+RESULT_NAME = 'l3-rate-trace_10Mbps.txt'
+LAYER = 'IXP'
 
 def print_full(x):
     pd.set_option('display.max_rows', len(x))
@@ -30,7 +31,7 @@ def get_cache_hit_ratio( path ):
     # Get only interesting records, the ones that contain information about network faces, and only information about In and Out Interests
     fx = f[ (f.FaceDescr=='netDeviceFace://') &  ( (f.Type=='InInterests') | (f.Type=='OutInterests') ) ].reset_index(drop=True)
     # Get only nodes of a specific layer (IXP or ISP)
-    fx = fx[ (fx.Node.str.contains('IXP')) ].reset_index(drop=True)
+    fx = fx[ (fx.Node.str.contains(LAYER)) ].reset_index(drop=True)
     # Get the interesting columns only
     fx = pd.DataFrame(fx,columns=['Time', 'Node','FaceId','Type','PacketRaw'])
     # Get the Information grouped by time and type (In or Out)
@@ -42,14 +43,16 @@ def get_cache_hit_ratio( path ):
     fx_hit = fx_in - fx_out
     # Compute the cache hit ratio
     fx_hit_ratio = 100 * (fx_hit / fx_in)   
+
+    fx_hit_ratio = fx_hit_ratio.loc[1:2*N_SEGMENTS]
     return fx_hit_ratio
 
 chr_ncn = pd.DataFrame()
 chr_ndn = pd.DataFrame()
 
 for i in range(N_RUN):
-    chr_ncn = pd.concat([chr_ncn, get_cache_hit_ratio ( '../../../results/generated/' + str(i+1) + '/netcodndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
-    chr_ndn = pd.concat([chr_ndn, get_cache_hit_ratio ( '../../../results/generated/' + str(i+1) + '/ndn/l3-rate-trace.txt' )], axis=1, ignore_index=True)
+    chr_ncn = pd.concat([chr_ncn, get_cache_hit_ratio ( RESULT_PREFIX + str(i+1) + '/netcodndn/' + RESULT_NAME )], axis=1, ignore_index=True)
+    chr_ndn = pd.concat([chr_ndn, get_cache_hit_ratio ( RESULT_PREFIX + str(i+1) + '/ndn/' + RESULT_NAME )], axis=1, ignore_index=True)
 
 mean_ncn = chr_ncn.mean(axis=1).median(level=0)
 #sem_ncn = chr_ncn.sem(axis=1)
@@ -59,20 +62,21 @@ mean_ndn = chr_ndn.mean(axis=1).median(level=0)
 #sem_ndn = chr_ndn.sem(axis=1)
 #conf_int_ndn = st.t.interval(0.95, len(chr_ndn)-1, loc=mean_ndn, scale=sem_ndn)
 
-fig,ax = plt.subplots()
+fig,ax = newfig(0.32)
 
 #ax.fill_between(mean_ncn.index.values, conf_int_ncn[0], conf_int_ncn[1], color='#a9dfbf', alpha=0.5)
-ax.plot(mean_ncn, label='NetCodNDN-DASH', color='blue', marker=">")
+ax.plot(mean_ncn, label='NetCodNDN-DASH', color='blue')
 
 #ax.fill_between(mean_ndn.index.values, conf_int_ndn[0], conf_int_ndn[1], color='#aed6f1', alpha=0.5)
-ax.plot(mean_ndn, label='NDN-DASH', color='red', marker="*")
+ax.plot(mean_ndn, label='NDN-DASH', color='red')
 
-ax.legend(loc='lower right')
+ax.legend(loc='best')
 
-ax.set_ylabel("Cache hit rate [%]")
+ax.set_ylabel("Cache-hit rate [%]")
 ax.set_ylim([0,100])
 
 ax.set_xlabel("Time [s]")
-ax.set_xlim([0,60])
+#ax.set_xlim([1,2*N_SEGMENTS])
 
-plt.show()
+# Save the figure
+savefig('cache-hit-' + LAYER)

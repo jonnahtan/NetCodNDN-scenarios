@@ -81,7 +81,7 @@ main(int argc, char* argv[])
 	// Producer(s)
  	AppHelper producerHelper("ns3::ndn::FakeMultimediaServer");
  	producerHelper.SetPrefix("/unibe/videos");
-	producerHelper.SetAttribute("MetaDataFile", StringValue("data/csv/netflix.csv"));
+	producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
 	producerHelper.SetAttribute("MPDFileName", StringValue("video1.mpd"));
   	producerHelper.Install(sources); // install to some node from nodelist
 	  
