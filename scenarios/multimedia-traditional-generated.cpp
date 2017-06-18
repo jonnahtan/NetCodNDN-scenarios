@@ -34,7 +34,7 @@ main(int argc, char* argv[])
 	cmd.Parse(argc, argv);
 
 	AnnotatedTopologyReader topologyReader("", 25);
-	topologyReader.SetFileName("topologies/layer-generated.txt");
+	topologyReader.SetFileName("topologies/layer-generated-INFOCOM.txt");
 	topologyReader.Read();
 	
 	// Getting containers for the consumer/producer
@@ -43,7 +43,7 @@ main(int argc, char* argv[])
 	NodeContainer clients;
 
     // Fill the containers and set the routing (FIB)
-    #include "../topologies/layer-generated-cpp.txt"
+    #include "../topologies/layer-generated-INFOCOM-cpp.txt"
 
 	// Choosing forwarding strategy
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(sources, "/unibe");

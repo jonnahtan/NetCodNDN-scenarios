@@ -34,7 +34,7 @@ main(int argc, char* argv[])
 
 
 	AnnotatedTopologyReader topologyReader("", 25);
-	topologyReader.SetFileName("topologies/layer-generated.txt");
+	topologyReader.SetFileName("topologies/layer-generated-INFOCOM.txt");
 	topologyReader.Read();
 
 	// Getting containers for the consumer/producer
@@ -43,7 +43,7 @@ main(int argc, char* argv[])
 	NodeContainer clients;
 
     // Fill the containers and set the routing (FIB)
-    #include "../topologies/layer-generated-cpp.txt"
+    #include "../topologies/layer-generated-INFOCOM-cpp.txt"
 
 	/*
 
@@ -76,12 +76,13 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("StartRepresentationId", StringValue("lowest"));
 	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("2.0"));
-
-  //clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
-	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
-  	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
-
 	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
+
+  	//clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
+	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
+
+	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
+
 
   	//consumerHelper.SetPrefix (std::string("/Server_" + boost::lexical_cast<std::string>(i%server.size ()) + "/layer0"));
 
@@ -96,11 +97,20 @@ main(int argc, char* argv[])
 	}
 
 	// Producer(s)
- 	AppHelper producerHelper("ns3::ndn::FakeMultimediaServerNetworkCoding");
- 	producerHelper.SetPrefix("/unibe/videos");
-	producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
-	producerHelper.SetAttribute("MPDFileName", StringValue("video1.mpd"));
-  	producerHelper.Install(sources);
+	std::vector<std::string> mpdNames;
+	
+	mpdNames.push_back("video1.mpd");
+	mpdNames.push_back("video2.mpd");
+	mpdNames.push_back("video3.mpd");
+
+	for (auto name : mpdNames)
+	{
+		AppHelper producerHelper("ns3::ndn::FakeMultimediaServerNetworkCoding");
+		producerHelper.SetPrefix("/unibe/videos");
+		producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
+		producerHelper.SetAttribute("MPDFileName", StringValue(name));
+		producerHelper.Install(sources);
+	}
 
     // Installing global routing interface on all nodes
 	GlobalRoutingHelper ndnGlobalRoutingHelper;

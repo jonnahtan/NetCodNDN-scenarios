@@ -1,12 +1,12 @@
-import pandas as pd
-from common import *
-
 import matplotlib.colors as mcol
+import pandas as pd
+
+from common import *
 
 # Config
 N_SEGMENTS = 50
 N_RUN = 1
-RESULT_PREFIX = '../../../results/generated/'
+RESULT_PREFIX = '../../../results/TMM/'
 RESULT_NAME = 'dash-trace_10Mbps.txt'
 
 def read_quality ( path ):
@@ -30,8 +30,8 @@ quality_ncn = pd.DataFrame()
 quality_ndn = pd.DataFrame()
 
 for i in range(N_RUN):
-    quality_ncn = pd.concat([quality_ncn, read_quality ( RESULT_PREFIX + str(i+1) + '/netcodndn/' + RESULT_NAME )], axis=1, ignore_index=True)
-    quality_ndn = pd.concat([quality_ndn, read_quality ( RESULT_PREFIX + str(i+1) + '/ndn/' + RESULT_NAME )], axis=1, ignore_index=True)
+    quality_ncn = pd.concat([quality_ncn, read_quality ( RESULT_PREFIX + '/netcodndn/' + RESULT_NAME )], axis=1, ignore_index=True)
+    quality_ndn = pd.concat([quality_ndn, read_quality ( RESULT_PREFIX + '/ndn/' + RESULT_NAME )], axis=1, ignore_index=True)
 
 quality_ncn = quality_ncn.unstack(level='SegmentRepID', fill_value=0.0)[0]
 quality_ndn = quality_ndn.unstack(level='SegmentRepID', fill_value=0.0)[0]
@@ -87,5 +87,3 @@ plt.figure(fig_ndn.number)
 savefig("representations-segment-ndn")
 
 #plt.show()
-
-
