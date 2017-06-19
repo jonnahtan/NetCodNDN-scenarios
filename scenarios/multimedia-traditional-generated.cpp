@@ -36,7 +36,7 @@ main(int argc, char* argv[])
 	AnnotatedTopologyReader topologyReader("", 25);
 	topologyReader.SetFileName("topologies/layer-generated-INFOCOM.txt");
 	topologyReader.Read();
-	
+
 	// Getting containers for the consumer/producer
 	NodeContainer sources;
 	NodeContainer routers;
@@ -62,16 +62,19 @@ main(int argc, char* argv[])
 
   	//clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
 	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
-  	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
-
 	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
-  	//consumerHelper.SetPrefix (std::string("/Server_" + boost::lexical_cast<std::string>(i%server.size ()) + "/layer0"));
+  //clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
 	// Install consumers with random start times to randomize the seeds
 	srand (time(NULL));
 	for (NodeContainer::Iterator it = clients.Begin (); it != clients.End (); ++it)
 	{
+		std::ostringstream mpdName;
+		mpdName << "/unibe/videos/video" << 1 + rand()%3 << ".mpd";
+		std::cout << mpdName.str() << std::endl;
+		clientHelper.SetAttribute("MpdFileToRequest", StringValue(mpdName.str()));
+
 		ApplicationContainer app = clientHelper.Install(*it);
 		uint64_t startTime = 500 + (rand() % 100);
 		NS_LOG_UNCOND("Delay time for client " << (*it)->GetId() << " is " << startTime);
@@ -79,12 +82,23 @@ main(int argc, char* argv[])
 	}
 
 	// Producer(s)
- 	AppHelper producerHelper("ns3::ndn::FakeMultimediaServer");
- 	producerHelper.SetPrefix("/unibe/videos");
-	producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
-	producerHelper.SetAttribute("MPDFileName", StringValue("video1.mpd"));
-  	producerHelper.Install(sources); // install to some node from nodelist
-	  
+
+	std::vector<std::string> mpdNames;
+
+	mpdNames.push_back("video1.mpd");
+	mpdNames.push_back("video2.mpd");
+	mpdNames.push_back("video3.mpd");
+
+	for (auto name : mpdNames)
+	{
+		AppHelper producerHelper("ns3::ndn::FakeMultimediaServer");
+		producerHelper.SetPrefix("/unibe/videos");
+		producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
+		producerHelper.SetAttribute("MPDFileName", StringValue(name));
+		producerHelper.Install(sources);
+	}
+
+
     // Installing global routing interface on all nodes
 	GlobalRoutingHelper ndnGlobalRoutingHelper;
 	ndnGlobalRoutingHelper.InstallAll();
@@ -101,7 +115,7 @@ main(int argc, char* argv[])
 	L3RateTracer::InstallAll(tracer_path + "l3-rate-trace.txt", Seconds(1.0));
 	//FileConsumerLogTracer::Install(Names::Find<Node>("SE-C002"), "results/star/netcod/file-consumer-log-trace.txt");
 	DASHPlayerTracer::InstallAll(tracer_path + "dash-trace.txt");
-		
+
 	Simulator::Stop(Seconds(200.0));
 
 	Simulator::Run();
