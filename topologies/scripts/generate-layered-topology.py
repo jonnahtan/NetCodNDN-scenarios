@@ -34,7 +34,8 @@ def get_l2_nodes ( ):
     l = []
 
     for i in range(len(id)):
-        for j in range(random.randint(4, 10)):
+        l2_n_nodes = random.randint(2,3)#4,10
+        for j in range(l2_n_nodes):
             n = Node()
             n.id = id[i] + '-ISP' + str(j+1)
             n.loc = lc[i]
@@ -56,7 +57,7 @@ def get_l3_nodes ( ):
     speed_dist = [20, 60, 20]
 
     for i in range(len(id)):
-        clients_at_location = random.randint(10, 20)
+        clients_at_location = random.randint(4,5)#10,20
         # Create the client node items
         for j in range(clients_at_location):
             n = Node()
@@ -91,7 +92,7 @@ def get_links ( l0_nodes , l1_nodes , l2_nodes , l3_nodes , l3_location ):
             l = Link()
             l.x = x
             l.y = y
-            l.bw = str(50) + 'Mbps'
+            l.bw = str(10) + 'Mbps'
             ls.append(l)
 
     # L3 -> L2 links
@@ -211,13 +212,15 @@ for n in l3:
 
 f.write ('\n// Install NDN stack\n')
 f.write ('StackHelper ndnSources;\n')
-f.write ('ndnSources.setCsSize(1);\n')
-f.write ('ndnSources.Install(sources);\n')
+f.write ('ndnSources.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "1");\n')
+f.write ('ndnSources.Install(sources);\n\n')
+
 f.write ('StackHelper ndnRouters;\n')
-f.write ('ndnRouters.setCsSize(1000000);\n')
-f.write ('ndnRouters.Install(routers);\n')
+f.write ('ndnRouters.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "0");\n')
+f.write ('ndnRouters.Install(routers);\n\n')
+
 f.write ('StackHelper ndnClients;\n')
-f.write ('ndnClients.setCsSize(1);\n')
+f.write ('ndnClients.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "1");\n')
 f.write ('ndnClients.Install(clients);\n')
 
 f.write ('\n// Calculate and install FIBs\n')
