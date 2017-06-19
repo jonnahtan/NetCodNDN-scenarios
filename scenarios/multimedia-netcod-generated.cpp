@@ -81,15 +81,17 @@ main(int argc, char* argv[])
   	//clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
 	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
 
-	clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
-
-
-  	//consumerHelper.SetPrefix (std::string("/Server_" + boost::lexical_cast<std::string>(i%server.size ()) + "/layer0"));
+	//clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
 	// Install consumers with random start times to randomize the seeds
 	srand (time(NULL));
 	for (NodeContainer::Iterator it = clients.Begin (); it != clients.End (); ++it)
 	{
+		std::ostringstream mpdName;
+		mpdName << "/unibe/videos/video" << 1 + rand()%3 << ".mpd";
+		std::cout << mpdName.str() << std::endl;
+
+		clientHelper.SetAttribute("MpdFileToRequest", StringValue(mpdName.str()));
 		ApplicationContainer app = clientHelper.Install(*it);
 		uint64_t startTime = 500 + (rand() % 100);
 		NS_LOG_UNCOND("Delay time for client " << (*it)->GetId() << " is " << startTime);
@@ -98,7 +100,7 @@ main(int argc, char* argv[])
 
 	// Producer(s)
 	std::vector<std::string> mpdNames;
-	
+
 	mpdNames.push_back("video1.mpd");
 	mpdNames.push_back("video2.mpd");
 	mpdNames.push_back("video3.mpd");
