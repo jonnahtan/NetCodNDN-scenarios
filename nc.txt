@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="urn:mpeg:DASH:schema:MPD:2011" xsi:schemaLocation="urn:mpeg:DASH:schema:MPD:2011"
+profiles="urn:mpeg:dash:profile:isoff-main:2011" type="static"
+mediaPresentationDuration="PT0H1M0S" minBufferTime="PT2.0S">
+<BaseURL>/unibe/videos/video1/</BaseURL>
+<Period start="PT0S">
+<AdaptationSet bitstreamSwitching="true">
+<Representation id="1_480" codecs="avc1" mimeType="video/mp4" width="720" height="480" startWithSAP="1" bandwidth="1750000">
+<SegmentList duration="2">
+<SegmentURL media="repr_1_480_seg_0.264"/> 
+<SegmentURL media="repr_1_480_seg_1.264"/> 
+<SegmentURL media="repr_1_480_seg_2.264"/> 
+<SegmentURL media="repr_1_480_seg_3.264"/> 
+<SegmentURL media="repr_1_480_seg_4.264"/> 
+<SegmentURL media="repr_1_480_seg_5.264"/> 
+<SegmentURL media="repr_1_480_seg_6.264"/> 
+<SegmentURL media="repr_1_480_seg_7.264"/> 
+<SegmentURL media="repr_1_480_seg_8.264"/> 
+<SegmentURL media="repr_1_480_seg_9.264"/> 
+<SegmentURL media="repr_1_480_seg_10.264"/> 
+<SegmentURL media="repr_1_480_seg_11.264"/> 
+<SegmentURL media="repr_1_480_seg_12.264"/> 
+<SegmentURL media="repr_1_480_seg_13.264"/> 
+<SegmentURL media="repr_1_480_seg_14.264"/> 
+<SegmentURL media="repr_1_480_seg_15.264"/> 
+<SegmentURL media="repr_1_480_seg_16.264"/> 
+<SegmentURL media="repr_1_480_seg_17.264"/> 
+<SegmentURL media="repr_1_480_seg_18.264"/> 
+<SegmentURL media="repr_1_480_seg_19.264"/> 
+<SegmentURL media="repr_1_480_seg_20.264"/> 
+<SegmentURL media="repr_1_480_seg_21.264"/> 
+<SegmentURL media="repr_1_480_seg_22.264"/> 
+<SegmentURL media="repr_1_480_seg_23.264"/> 
+<SegmentURL media="repr_1_480_seg_24.264"/> 
+<SegmentURL media="repr_1_480_seg_25.264"/> 
+<SegmentURL media="repr_1_480_seg_26.264"/> 
+<SegmentURL media="repr_1_480_seg_27.264"/> 
+<SegmentURL media="repr_1_480_seg_28.264"/> 
+<SegmentURL media="repr_1_480_seg_29.264"/> 
+</SegmentList>
+</Representation>
+<Representation id="2_720" codecs="avc1" mimeType="video/mp4" width="1280" height="720" startWithSAP="1" bandwidth="3000000">
+<SegmentList duration="2">
+<SegmentURL media="repr_2_720_seg_0.264"/> 
+<SegmentURL media="repr_2_720_seg_1.264"/> 
+<SegmentURL media="repr_2_720_seg_2.264"/> 
+<SegmentURL media="repr_2_720_seg_3.264"/> 
+<SegmentURL media="repr_2_720_seg_4.264"/> 
+<SegmentURL media="repr_2_720_seg_5.264"/> 
+<SegmentURL media="repr_2_720_seg_6.264"/> 
+<SegmentURL media="repr_2_720_seg_7.264"/> 
+<SegmentURL media="repr_2_720_seg_8.264"/> 
+<SegmentURL media="repr_2_720_seg_9.264"/> 
+<SegmentURL media="repr_2_720_seg_10.264"/> 
+<SegmentURL media="repr_2_720_seg_11.264"/> 
+<SegmentURL media="repr_2_720_seg_12.264"/> 
+<SegmentURL media="repr_2_720_seg_13.264"/> 
+<SegmentURL media="repr_2_720_seg_14.264"/> 
+<SegmentURL media="repr_2_720_seg_15.264"/> 
+<SegmentURL media="repr_2_720_seg_16.264"/> 
+<SegmentURL media="repr_2_720_seg_17.264"/> 
+<SegmentURL media="repr_2_720_seg_18.264"/> 
+<SegmentURL media="repr_2_720_seg_19.264"/> 
+<SegmentURL media="repr_2_720_seg_20.264"/> 
+<SegmentURL media="repr_2_720_seg_21.264"/> 
+<SegmentURL media="repr_2_720_seg_22.264"/> 
+<SegmentURL media="repr_2_720_seg_23.264"/> 
+<SegmentURL media="repr_2_720_seg_24.264"/> 
+<SegmentURL media="repr_2_720_seg_25.264"/> 
+<SegmentURL media="repr_2_720_seg_26.264"/> 
+<SegmentURL media="repr_2_720_seg_27.264"/> 
+<SegmentURL media="repr_2_720_seg_28.264"/> 
+<SegmentURL media="repr_2_720_seg_29.264"/> 
+</SegmentList>
+</Representation>
+<Representation id="3_1080" codecs="avc1" mimeType="video/mp4" width="1920" height="1080" startWithSAP="1" bandwidth="5800000">
+<SegmentList duration="2">
+<SegmentURL media="repr_3_1080_seg_0.264"/> 
+<SegmentURL media="repr_3_1080_seg_1.264"/> 
+<SegmentURL media="repr_3_1080_seg_2.264"/> 
+<SegmentURL media="repr_3_1080_seg_3.264"/> 
+<SegmentURL media="repr_3_1080_seg_4.264"/> 
+<SegmentURL media="repr_3_1080_seg_5.264"/> 
+<SegmentURL media="repr_3_1080_seg_6.264"/> 
+<SegmentURL media="repr_3_1080_seg_7.264"/> 
+<SegmentURL media="repr_3_1080_seg_8.264"/> 
+<SegmentURL media="repr_3_1080_seg_9.264"/> 
+<SegmentURL media="repr_3_1080_seg_10.264"/> 
+<SegmentURL media="repr_3_1080_seg_11.264"/> 
+<SegmentURL media="repr_3_1080_seg_12.264"/> 
+<SegmentURL media="repr_3_1080_seg_13.264"/> 
+<SegmentURL media="repr_3_1080_seg_14.264"/> 
+<SegmentURL media="repr_3_1080_seg_15.264"/> 
+<SegmentURL media="repr_3_1080_seg_16.264"/> 
+<SegmentURL media="repr_3_1080_seg_17.264"/> 
+<SegmentURL media="repr_3_1080_seg_18.264"/> 
+<SegmentURL media="repr_3_1080_seg_19.264"/> 
+<SegmentURL media="repr_3_1080_seg_20.264"/> 
+<SegmentURL media="repr_3_1080_seg_21.264"/> 
+<SegmentURL media="repr_3_1080_seg_22.264"/> 
+<SegmentURL media="repr_3_1080_seg_23.264"/> 
+<SegmentURL media="repr_3_1080_seg_24.264"/> 
+<SegmentURL media="repr_3_1080_seg_25.264"/> 
+<SegmentURL media="repr_3_1080_seg_26.264"/> 
+<SegmentURL media="repr_3_1080_seg_27.264"/> 
+<SegmentURL media="repr_3_1080_seg_28.264"/> 
+<SegmentURL media="repr_3_1080_seg_29.264"/> 
+</SegmentList>
+</Representation>
+</AdaptationSet></Period></MPD>

@@ -127,15 +127,16 @@ clients.Add("SE-C004");
 
 // Install NDN stack
 StackHelper ndnSources;
-ndnSources.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "1");
+ndnSources.SetOldContentStore("ns3::ndn::cs::Nocache");
 ndnSources.Install(sources);
 
 StackHelper ndnRouters;
-ndnRouters.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "0");
+ndnRouters.SetOldContentStore("ns3::ndn::cs::Lfu", "MaxSize", "10000");
+//ndnRouters.SetOldContentStore("ns3::ndn::cs::Nocache");
 ndnRouters.Install(routers);
 
 StackHelper ndnClients;
-ndnClients.SetOldContentStore("ns3::ndn::cs::Lru", "MaxSize", "1");
+ndnClients.SetOldContentStore("ns3::ndn::cs::Nocache");
 ndnClients.Install(clients);
 
 // Calculate and install FIBs

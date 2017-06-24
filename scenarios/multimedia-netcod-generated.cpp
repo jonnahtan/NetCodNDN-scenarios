@@ -20,21 +20,23 @@ using ns3::ndn::L3RateTracer;
 using ns3::ndn::FileConsumerLogTracer;
 using ns3::ndn::DASHPlayerTracer;
 
-NS_LOG_COMPONENT_DEFINE ("File_NetworkCoding_L");
+NS_LOG_COMPONENT_DEFINE ("MultimediaNetcodGenerated");
 
 #define _LOG_INFO(x) NS_LOG_INFO(x)
 
 int
 main(int argc, char* argv[])
 {
-	int runId = 1;
+	int VIDEOS = 7;
+	srand (time(NULL));
+
 	CommandLine cmd;
+	int runId = 1;
 	cmd.AddValue ("runid", "ID for this run", runId);
 	cmd.Parse(argc, argv);
 
-
 	AnnotatedTopologyReader topologyReader("", 25);
-	topologyReader.SetFileName("topologies/layer-generated-INFOCOM.txt");
+	topologyReader.SetFileName("topologies/layer-generated.txt");
 	topologyReader.Read();
 
 	// Getting containers for the consumer/producer
@@ -43,7 +45,7 @@ main(int argc, char* argv[])
 	NodeContainer clients;
 
     // Fill the containers and set the routing (FIB)
-    #include "../topologies/layer-generated-INFOCOM-cpp.txt"
+    #include "../topologies/layer-generated-cpp.txt"
 
 	/*
 
@@ -63,7 +65,7 @@ main(int argc, char* argv[])
 	*/
 
 	// Choosing forwarding strategy
-	StrategyChoiceHelper::Install<nfd::fw::RandomLoadBalancerStrategy_NA>(sources, "/unibe");
+	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(sources, "/unibe");
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(routers, "/unibe");
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(clients, "/unibe");
 
@@ -83,15 +85,18 @@ main(int argc, char* argv[])
 
 	//clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
+	// Distribution of the videos requested by the clients
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(1, VIDEOS);
+
 	// Install consumers with random start times to randomize the seeds
-	srand (time(NULL));
 	for (NodeContainer::Iterator it = clients.Begin (); it != clients.End (); ++it)
 	{
-		std::ostringstream mpdName;
-		mpdName << "/unibe/videos/video" << 1 + rand()%3 << ".mpd";
-		std::cout << mpdName.str() << std::endl;
+		std::ostringstream prefix;
+		prefix << "/unibe/videos/video" << dis(gen) << ".mpd";
 
-		clientHelper.SetAttribute("MpdFileToRequest", StringValue(mpdName.str()));
+		clientHelper.SetAttribute("MpdFileToRequest", StringValue(prefix.str()));
 		ApplicationContainer app = clientHelper.Install(*it);
 		uint64_t startTime = 500 + (rand() % 100);
 		NS_LOG_UNCOND("Delay time for client " << (*it)->GetId() << " is " << startTime);
@@ -99,20 +104,14 @@ main(int argc, char* argv[])
 	}
 
 	// Producer(s)
-	std::vector<std::string> mpdNames;
+	AppHelper producerHelper("ns3::ndn::FakeMultimediaServerNetworkCoding");
+	
+	producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
+	producerHelper.SetPrefix("/unibe/videos");
+	producerHelper.SetAttribute("VideoName", StringValue("video"));
+	producerHelper.SetAttribute("NumberOfVideos", UintegerValue(VIDEOS));
 
-	mpdNames.push_back("video1.mpd");
-	mpdNames.push_back("video2.mpd");
-	mpdNames.push_back("video3.mpd");
-
-	for (auto name : mpdNames)
-	{
-		AppHelper producerHelper("ns3::ndn::FakeMultimediaServerNetworkCoding");
-		producerHelper.SetPrefix("/unibe/videos");
-		producerHelper.SetAttribute("MetaDataFile", StringValue("data/multimedia/representations/netflix.csv"));
-		producerHelper.SetAttribute("MPDFileName", StringValue(name));
-		producerHelper.Install(sources);
-	}
+	producerHelper.Install(sources);
 
     // Installing global routing interface on all nodes
 	GlobalRoutingHelper ndnGlobalRoutingHelper;

@@ -41,5 +41,5 @@ def newfig(width):
     return fig, ax
 
 def savefig(filename):
-    plt.savefig('../../pgfs/TMM/{}.pgf'.format(filename), bbox_inches='tight', pad_inches=0)
-    plt.savefig('../../pdfs/TMM/{}.pdf'.format(filename), bbox_inches='tight', pad_inches=0)
+    plt.savefig('../../pgfs/INFOCOM/{}.pgf'.format(filename), bbox_inches='tight', pad_inches=0)
+    plt.savefig('../../pdfs/INFOCOM/{}.pdf'.format(filename), bbox_inches='tight', pad_inches=0)

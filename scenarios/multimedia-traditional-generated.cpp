@@ -34,7 +34,7 @@ main(int argc, char* argv[])
 	cmd.Parse(argc, argv);
 
 	AnnotatedTopologyReader topologyReader("", 25);
-	topologyReader.SetFileName("topologies/layer-generated-INFOCOM.txt");
+	topologyReader.SetFileName("topologies/layer-generated.txt");
 	topologyReader.Read();
 
 	// Getting containers for the consumer/producer
@@ -43,7 +43,7 @@ main(int argc, char* argv[])
 	NodeContainer clients;
 
     // Fill the containers and set the routing (FIB)
-    #include "../topologies/layer-generated-INFOCOM-cpp.txt"
+    #include "../topologies/layer-generated-cpp.txt"
 
 	// Choosing forwarding strategy
 	StrategyChoiceHelper::Install<nfd::fw::WeightedLoadBalancerStrategy>(sources, "/unibe");
@@ -59,12 +59,13 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("StartRepresentationId", StringValue("lowest"));
 	clientHelper.SetAttribute("MaxBufferedSeconds", UintegerValue(30));
 	clientHelper.SetAttribute("StartUpDelay", StringValue("2.0"));
+	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
   	//clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
 	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
-	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
-  //clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
+
+  	//clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
 	// Install consumers with random start times to randomize the seeds
 	srand (time(NULL));

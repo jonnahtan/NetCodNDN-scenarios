@@ -22,20 +22,20 @@ def read_clients ( path ):
     return a
 
 clients = pd.DataFrame()
-clients = read_clients ( RESULT_PREFIX + 'layer-generated-clients.txt' )
+clients = read_clients ( RESULT_PREFIX + 'layer-generated-clients-TMM.txt' )
 
 fig, ax = newfig(0.32)
 
 ax.hist(clients.Bandwidth, bins=11, normed=True, color='silver', label=None)
 ax.set_ylabel("Percentage of clients [%]")
-ax.set_xlabel("Total Bandwidth [Mbps]")
-ax.set_xlim([0,16])
+ax.set_xlabel("Total client bandwidth [Mbps]")
+ax.set_ylim([0,0.3])
 
 mu = 8
-variance = 3
+variance = 4.5
 sigma = math.sqrt(variance)
-x = np.linspace(mu-3*variance,mu+3*variance, 100)
-plt.plot(x,mlab.normpdf(x, mu, sigma), color='black', label=r'$\mu=8$' '\n' r'$\sigma=3')
+x = np.linspace(0,16,100)
+plt.plot(x,mlab.normpdf(x, mu, sigma), color='black', label=r'$\mu=2 \times 4$' '\n' r'$\sigma=\sqrt{2} \times 1.5')
 
 formatter = FuncFormatter(to_percent)
 plt.gca().yaxis.set_major_formatter(formatter)

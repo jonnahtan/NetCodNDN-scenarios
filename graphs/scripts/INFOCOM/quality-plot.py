@@ -1,13 +1,14 @@
+import matplotlib.colors as mcol
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.lines as mlines
-from scipy.interpolate import interp1d
 
+from common import *
+
+# Config
+N_SEGMENTS = 50
 N_RUN = 1
-REPRESENTATIONS = ['480','720','1080','4K']
+RESULT_PREFIX = '../../../results/generated/1'
+RESULT_NAME = 'dash-trace.txt'
 
-#			StallingTime(msec)	SegmentDepIds
 def read_quality ( path ):
     f = pd.read_csv(path,
                     sep='\t',
@@ -21,28 +22,44 @@ def read_quality ( path ):
     fx = pd.DataFrame(f,columns=['SegmentNumber','SegmentRepID'])
     a =  fx.groupby(['SegmentNumber','SegmentRepID']).size()
     a = 100 * a/a.groupby(level=['SegmentNumber']).sum()
+
+    a = a.loc[0:N_SEGMENTS]
     return a
 
 quality_ncn = pd.DataFrame()
 quality_ndn = pd.DataFrame()
 
 for i in range(N_RUN):
-    quality_ncn = pd.concat([quality_ncn, read_quality ( '../../results/results_4/' + str(i) + '/netcodndn/dash-trace.txt' )], axis=1, ignore_index=True)
-    quality_ndn = pd.concat([quality_ndn, read_quality ( '../../results/results_4/' + str(i) + '/ndn/dash-trace.txt' )], axis=1, ignore_index=True)
-
-
-#select only up to certain time
-quality_ncn = quality_ncn.loc[0:30]
-quality_ndn = quality_ndn.loc[0:30]
+    quality_ncn = pd.concat([quality_ncn, read_quality ( RESULT_PREFIX + '/netcodndn/' + RESULT_NAME )], axis=1, ignore_index=True)
+    quality_ndn = pd.concat([quality_ndn, read_quality ( RESULT_PREFIX + '/ndn/' + RESULT_NAME )], axis=1, ignore_index=True)
 
 quality_ncn = quality_ncn.unstack(level='SegmentRepID', fill_value=0.0)[0]
 quality_ndn = quality_ndn.unstack(level='SegmentRepID', fill_value=0.0)[0]
 
-#quality_ncn = quality_ncn.rename('RepresentationID', level=['SegmentRepID'])
+#quality_ndn = quality_ncn.rename('Representation', level=['SegmentRepID'])
 
-print quality_ncn
-ax_ncn = quality_ncn.plot(kind='area', stacked=True, colormap='Dark2')
-ax_ndn = quality_ndn.plot(kind='area', stacked=True, colormap='Dark2')
+# Simple plot
+fig_ncn, ax_ncn = newfig(0.32)
+fig_ndn, ax_ndn = newfig(0.32)
+
+# Color Maps
+lvTmp = np.linspace(0.25,0.75,3)
+
+cBluesTmp = plt.cm.Blues(lvTmp)
+cBlues = mcol.ListedColormap(cBluesTmp)
+
+cRedsTmp = plt.cm.Reds(lvTmp)
+cReds = mcol.ListedColormap(cRedsTmp)
+
+# Rename columns
+quality_ncn.columns = ['480p', '720p', '1080p']
+quality_ndn.columns = ['480p', '720p', '1080p']
+
+#ax_ncn = 
+quality_ncn.plot(kind='area', stacked=True, colormap=cBlues, ax=ax_ncn, lw=0.1)
+#ax_ndn = 
+quality_ndn.plot(kind='area', stacked=True, colormap=cReds, ax=ax_ndn, lw=0.1)
+
 
 #mean_ncn = pd.DataFrame()
 #mean_ndn = pd.DataFrame()
@@ -54,20 +71,19 @@ ax_ndn = quality_ndn.plot(kind='area', stacked=True, colormap='Dark2')
 #        ax_ncn.stackplot(mean_ncn, label='NetCodNDN '+ str(r))#, color='#145a32')
 #        ax_ndn.stackplot(mean_ndn, label='NDN '+ str(r))#, color='#21618c')
 
-#ax_ncn.set_title('NCN')
-ax_ncn.set_ylabel("Percentage of clients [%]")
+ax_ncn.set_ylabel("Clients [%]")
 ax_ncn.set_ylim([0,100])
 ax_ncn.set_xlabel("Segment")
-ax_ncn.set_xlim([0,30])
-#ax_ncn.legend(["480p", "720p","1080p"])
 
-ax_ndn.set_ylabel("Percentage of clients [%]")
+ax_ndn.set_ylabel("Clients [%]")
 ax_ndn.set_ylim([0,100])
 ax_ndn.set_xlabel("Segment")
-ax_ndn.set_xlim([0,30])
-#ax_ndn.legend(["480p", "720p","1080p"], loc='lower right')
 
-#quality_ncn.plot.bar(stacked=True);
-plt.show()
+#Save/show the plot(s)
+plt.figure(fig_ncn.number)
+savefig("representations-segment-netcodndn")
 
+plt.figure(fig_ndn.number)
+savefig("representations-segment-ndn")
 
+#plt.show()

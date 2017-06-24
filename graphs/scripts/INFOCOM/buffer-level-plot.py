@@ -27,8 +27,8 @@ bitrate_ncn = pd.DataFrame()
 bitrate_ndn = pd.DataFrame()
 
 for i in range(N_RUN):
-    bitrate_ncn = pd.concat([bitrate_ncn, read_bitrate ( '../../results/generated/' + str(i+1) + '/netcodndn/dash-trace.txt' )], axis=1, ignore_index=True)
-    bitrate_ndn = pd.concat([bitrate_ndn, read_bitrate ( '../../results/generated/' + str(i+1) + '/ndn/dash-trace.txt' )], axis=1, ignore_index=True)
+    bitrate_ncn = pd.concat([bitrate_ncn, read_bitrate ( '../../../results/generated/' + str(i+1) + '/netcodndn/dash-trace.txt' )], axis=1, ignore_index=True)
+    bitrate_ndn = pd.concat([bitrate_ndn, read_bitrate ( '../../../results/generated/' + str(i+1) + '/ndn/dash-trace.txt' )], axis=1, ignore_index=True)
 
 upper_limit_ncn = bitrate_ncn.max(axis=1)
 lower_limit_ncn = bitrate_ncn.min(axis=1)
