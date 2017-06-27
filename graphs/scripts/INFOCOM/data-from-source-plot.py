@@ -6,8 +6,8 @@ N_SEGMENTS = 40
 N_RUN = 1
 RESULT_PREFIX = '../../../results/generated/1'
 RESULT_NAME = 'l3-rate-trace_{0}.txt'
-NCN_POLICIES = ['nocache', 'd50_10K', 'd1000_10K', 'd5000_10K','p50_lru_10K', 'lce']
-NDN_POLICIES = ['nocache', 'lfu_1K', 'lfu_10K', 'lfu_100K', 'lce']
+NCN_POLICIES = ['nocache', 'ddd', 'dd', 'p50+lru_100K', 'd500+d_100K', 'lce'] #'d500+d_10K',
+NDN_POLICIES = []
 
 def read_data_packets_at_source ( path ):
     f = pd.read_csv(path,

@@ -3,12 +3,12 @@ import itertools
 from common import *
 
 # Config
-N_SEGMENTS = 30
+N_SEGMENTS = 60
 N_RUN = 1
 RESULT_PREFIX = '../../../results/generated/1'
 RESULT_NAME = 'dash-trace_{0}.txt'
-NCN_POLICIES = ['nocache', 'd50_10K', 'd1000_10K', 'd5000_10K','p50_lru_10K', 'lce']
-NDN_POLICIES = ['nocache', 'lfu_1K', 'lfu_10K', 'lfu_100K', 'lce']
+NCN_POLICIES = ['nocache', 'dd', 'p50+lru_100K', 'd500+d_100K', 'lce'] #'d500+d_10K',
+NDN_POLICIES = []
 
 #import matplotlib.lines as mlines
 #from scipy.interpolate import interp1d
@@ -50,12 +50,12 @@ for r in range(N_RUN):
 #mean_ndn = bitrate_ndn.median(axis=1)
 
 throughput_ncn.index = throughput_ncn.index.droplevel(1)
-throughput_ncn = throughput_ncn.reindex(range(0,29))
+throughput_ncn = throughput_ncn.reindex(range(0,59))
 throughput_ncn = throughput_ncn.fillna(value=0.0)
 
-throughput_ndn.index = throughput_ndn.index.droplevel(1)
-throughput_ndn = throughput_ndn.reindex(range(0,29))
-throughput_ndn = throughput_ndn.fillna(value=0.0)
+#throughput_ndn.index = throughput_ndn.index.droplevel(1)
+#throughput_ndn = throughput_ndn.reindex(range(0,29))
+#throughput_ndn = throughput_ndn.fillna(value=0.0)
 
 # Simple plot
 fig, ax = newfig(0.5)

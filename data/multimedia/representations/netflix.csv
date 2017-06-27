@@ -1,5 +1,5 @@
 segmentDuration=2
-numberOfSegments=30
+numberOfSegments=60
 reprId,screenWidth,screenHeight,bitrate
 1_480,720,480,1750
 2_720,1280,720,3000

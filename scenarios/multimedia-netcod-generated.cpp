@@ -27,7 +27,7 @@ NS_LOG_COMPONENT_DEFINE ("MultimediaNetcodGenerated");
 int
 main(int argc, char* argv[])
 {
-	int VIDEOS = 7;
+	int VIDEOS = 3;
 	srand (time(NULL));
 
 	CommandLine cmd;
