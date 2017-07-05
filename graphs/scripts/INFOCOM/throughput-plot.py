@@ -3,16 +3,16 @@ import itertools
 from common import *
 
 # Config
-N_SEGMENTS = 60
+N_SEGMENTS = 50
 N_RUN = 1
 RESULT_PREFIX = '../../../results/generated/1'
 RESULT_NAME = 'dash-trace_{0}.txt'
-NCN_POLICIES = ['nocache', 'dd', 'p50+lru_100K', 'd500+d_100K', 'lce'] #'d500+d_10K',
+REPRESENTATION = '3_1080'
+NCN_POLICIES = ['lce', 'dd', 'delta', 'lru'] 
 NDN_POLICIES = []
 
 #import matplotlib.lines as mlines
 #from scipy.interpolate import interp1d
-
 
 def read_quality ( path ):
     f = pd.read_csv(path,
@@ -28,7 +28,7 @@ def read_quality ( path ):
     a =  fx.groupby(['SegmentNumber','SegmentRepID']).size()
     a = 100 * a/a.groupby(level=['SegmentNumber']).sum()
 
-    a = a.loc[0:N_SEGMENTS,['3_1080']]
+    a = a.loc[0:N_SEGMENTS,[REPRESENTATION]]
 
     return a
 
@@ -50,7 +50,7 @@ for r in range(N_RUN):
 #mean_ndn = bitrate_ndn.median(axis=1)
 
 throughput_ncn.index = throughput_ncn.index.droplevel(1)
-throughput_ncn = throughput_ncn.reindex(range(0,59))
+throughput_ncn = throughput_ncn.reindex(range(0,N_SEGMENTS-1))
 throughput_ncn = throughput_ncn.fillna(value=0.0)
 
 #throughput_ndn.index = throughput_ndn.index.droplevel(1)
@@ -79,7 +79,7 @@ ax.set_ylabel("Clients at 1080p [%]")
 ax.set_xlabel("Segment")
 
 # Save the figure
-savefig("test")
+savefig("percetage_{0}".format(REPRESENTATION))
 
 #Show the figure
 plt.show()

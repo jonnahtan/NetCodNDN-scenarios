@@ -57,7 +57,7 @@ def get_l3_nodes ( ):
     speed_dist = [20, 60, 20]
 
     for i in range(len(id)):
-        clients_at_location = random.randint(4,5)#10,20
+        clients_at_location = random.randint(5,10)#10,20
         # Create the client node items
         for j in range(clients_at_location):
             n = Node()
@@ -92,7 +92,7 @@ def get_links ( l0_nodes , l1_nodes , l2_nodes , l3_nodes , l3_location ):
             l = Link()
             l.x = x
             l.y = y
-            l.bw = str(10) + 'Mbps'
+            l.bw = str(50) + 'Mbps'
             ls.append(l)
 
     # L3 -> L2 links

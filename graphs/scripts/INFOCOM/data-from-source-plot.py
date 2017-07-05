@@ -2,11 +2,11 @@ import pandas as pd
 from common import *
 import itertools
 
-N_SEGMENTS = 40
+N_SEGMENTS = 60
 N_RUN = 1
 RESULT_PREFIX = '../../../results/generated/1'
 RESULT_NAME = 'l3-rate-trace_{0}.txt'
-NCN_POLICIES = ['nocache', 'ddd', 'dd', 'p50+lru_100K', 'd500+d_100K', 'lce'] #'d500+d_10K',
+NCN_POLICIES = ['lce', 'dd', 'delta', 'lru'] 
 NDN_POLICIES = []
 
 def read_data_packets_at_source ( path ):

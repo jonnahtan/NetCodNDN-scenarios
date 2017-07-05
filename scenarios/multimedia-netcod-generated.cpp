@@ -27,7 +27,7 @@ NS_LOG_COMPONENT_DEFINE ("MultimediaNetcodGenerated");
 int
 main(int argc, char* argv[])
 {
-	int VIDEOS = 3;
+	int VIDEOS = 5;
 	srand (time(NULL));
 
 	CommandLine cmd;
@@ -80,8 +80,8 @@ main(int argc, char* argv[])
 	clientHelper.SetAttribute("StartUpDelay", StringValue("2.0"));
 	clientHelper.SetAttribute("LifeTime", StringValue("1000ms"));
 
-  	//clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
-	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
+  	clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::RateAndBufferBasedAdaptationLogic"));
+	//clientHelper.SetAttribute("AdaptationLogic", StringValue("dash::player::DASHJSAdaptationLogic"));
 
 	//clientHelper.SetAttribute("MpdFileToRequest", StringValue(std::string("/unibe/videos/video1.mpd" )));
 
@@ -98,7 +98,7 @@ main(int argc, char* argv[])
 
 		clientHelper.SetAttribute("MpdFileToRequest", StringValue(prefix.str()));
 		ApplicationContainer app = clientHelper.Install(*it);
-		uint64_t startTime = 500 + (rand() % 100);
+		uint64_t startTime = 500 + (rand() % 5000);
 		NS_LOG_UNCOND("Delay time for client " << (*it)->GetId() << " is " << startTime);
 		app.Start(MilliSeconds(startTime));
 	}
